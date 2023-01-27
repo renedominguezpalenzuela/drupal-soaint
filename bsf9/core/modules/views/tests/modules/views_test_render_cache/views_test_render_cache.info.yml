@@ -1,0 +1,12 @@
+name: 'Views Test Render Cache'
+type: module
+description: 'Provides routes for testing render cache.'
+package: Testing
+# version: VERSION
+dependencies:
+  - drupal:views
+
+# Information added by Drupal.org packaging script on 2022-10-06
+version: '9.4.8'
+project: 'drupal'
+datestamp: 1665072456

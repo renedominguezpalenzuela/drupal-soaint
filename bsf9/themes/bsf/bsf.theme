@@ -1,0 +1,71 @@
+<?php
+
+function bsf_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  // Add content type suggestions.
+  if ($node = \Drupal::request()->attributes->get('node')) {
+    array_splice($suggestions, 1, 0, 'page__node__' . $node->getType());
+  }  
+ }  
+
+function bsf_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  // Block suggestions for bsf block bundles.
+  if (isset($variables['elements']['content']['#block_content'])) {
+    array_splice($suggestions, 1, 0, 'block__' . $variables['elements']['content']['#block_content']->bundle()); 
+  }
+} 
+function bsf_preprocess_html(&$variables) { 
+  // Add node id to the body class.
+
+  $variables['attributes']['class'][] = 'html page-node'; 
+
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if($node) {
+    $variables['attributes']['class'][] = 'page-node-' . $node->id(); 
+  }
+  
+  if ($node instanceof \Drupal\node\NodeInterface) {
+    $variables['attributes']['class'][] = 'node-' . $node->getType();
+  }
+
+  $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+  $variables['attributes']['class'][] = $variables['is_front'] ? 'front' : 'not-front';
+  $variables['attributes']['class'][] = \Drupal::currentUser()->isAuthenticated() ? 'logged-in' : 'not-logged-in';
+} 
+
+function bsf_preprocess_breadcrumb(&$variables){ 
+
+  if(($node = \Drupal::routeMatch()->getParameter('node')) && $variables['breadcrumb']){
+  // Adding the a divider of between home an the title of the page.
+  /*      
+  $variables['breadcrumb'][] = array( 
+            'text' => '>'
+        );
+        */ 
+  // Adding the title of the page in the breadcrumb
+        $variables['breadcrumb'][] = array(
+            'text' => $node->getTitle(),
+            'url' => $node->toUrl()->toString() 
+        );
+
+    }
+}
+
+function bsf_preprocess_page(&$variables) { 
+
+  global $base_url, $base_path;
+  $variables['logo'] = $base_url .'/'. drupal_get_path('theme','bsf') . '/logo.png';
+  $variables['base_path'] = $base_url;
+
+  if (\Drupal::routeMatch()->getRouteName() == 'entity.taxonomy_term.canonical') {
+    $term = \Drupal::routeMatch()->getParameter('taxonomy_term');
+    $variables['term'] = $term; 
+  }
+
+  $request = \Drupal::request();
+  $route_match = \Drupal::routeMatch();
+  $page_title = \Drupal::service('title_resolver')->getTitle($request, $route_match->getRouteObject());
+  $variables['title'] = $page_title;
+
+}
+
+ 

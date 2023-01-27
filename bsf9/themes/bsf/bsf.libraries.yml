@@ -1,0 +1,10 @@
+global-styling:
+  version: 1.x
+  css:
+    theme:
+      css/style.css: {}
+      css/font-awesome.min.css: {}
+      css/animate.css: {}
+  js:
+    js/bsf.js: {}
+    js/analytics.js: {}

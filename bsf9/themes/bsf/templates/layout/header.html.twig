@@ -1,0 +1,35 @@
+{%
+      set navbar_classes = [
+        'navbar',
+        theme.settings.navbar_inverse ? 'navbar-inverse' : 'navbar-default',
+        theme.settings.navbar_position ? 'navbar-' ~ theme.settings.navbar_position|clean_class : container,
+      ]      
+%}
+
+  <header id="navbar" role="banner" {{ navbar_attributes.addClass(navbar_classes) }}">
+    <div>
+      <div class="navbar-header">
+
+        <a class="logo navbar-btn pull-left" href="{{ url('<front>') }}" title="{{ 'Home'|t }}">
+          <img src="{{ logo }}" alt="{{ 'Home'|t }}" width="176" height="80" />
+        </a>                 
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">{{'Toggle navigation' | t}}</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+                 
+      </div>
+
+      <div class="navbar-collapse collapse">
+        <nav role="navigation">         
+            {{ drupal_menu('main') }}
+            {{ drupal_menu('account') }}                
+        </nav>
+      </div> 
+
+    </div>
+  </header>
+ 
+

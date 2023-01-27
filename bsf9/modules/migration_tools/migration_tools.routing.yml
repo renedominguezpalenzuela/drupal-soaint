@@ -1,0 +1,10 @@
+
+migration_tools.migration_tools_admin_form:
+  path: '/admin/content/migrate/migration_tools'
+  defaults:
+    _form: '\Drupal\migration_tools\Form\MigrationToolsAdminForm'
+    _title: 'Migration Tools Admin'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE

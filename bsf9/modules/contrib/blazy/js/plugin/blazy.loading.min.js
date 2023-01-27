@@ -1,0 +1,1 @@
+!function(c){"use strict";function n(n){return c.chain(n,function(n){var s="loading",n=[n,c.closest(n,".is-"+s),c.closest(n,'[class*="'+s+'"]')];c.each(n,function(n){var a;c.isElm(n)&&(a=n.className,c.contains(a,s)&&(n.className=a.replace(/(\S+)loading/g,"")))})})}c.unloading=n,c.fn.unloading=function(){return n(this)}}(dBlazy);

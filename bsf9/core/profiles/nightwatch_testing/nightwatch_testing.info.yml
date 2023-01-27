@@ -1,0 +1,12 @@
+name: Nightwatch Testing
+type: profile
+description: 'Minimal profile for running Nightwatch tests. Includes absolutely required modules only.'
+# version: VERSION
+hidden: true
+install:
+  - js_testing_log_test
+
+# Information added by Drupal.org packaging script on 2022-10-06
+version: '9.4.8'
+project: 'drupal'
+datestamp: 1665072456

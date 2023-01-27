@@ -1,0 +1,172 @@
+/**
+ * @file
+ *
+ * Temporary fixes till further extensive updates.
+ */
+
+.form--slick .form-item--label,
+.form--slick .form-item.form-type--vertical-tabs,
+.form--slick .form-item.js-form-type-vertical-tabs {
+  border: 0;
+}
+
+/* Gin compat. */
+[data-gin-accent] .form--slick .form-type--boolean .form-boolean {
+  min-height: 100%;
+  top: 0;
+  transform: none;
+}
+
+/* Fixed weird Gin zoom in out button sizes at Gridstack form. */
+.form--slick .form-actions button {
+  padding: 0 10px 1px;
+}
+
+.field-plugin-settings-editing .form--slick {
+  padding-top: 0;
+}
+
+.form--slick .fieldset__description {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Workarounds for core JS errors with reference is null at states.js:117.
+@todo recheck might be bad for Blazy OEmbed form, etc.
+.form--vanilla:not(.form--media-switch-lightbox) .form-item--box-style,
+.form--vanilla:not(.form--media-switch-lightbox) .form-item--box-media-style,
+.form--vanilla:not(.form--media-switch-lightbox) .form-item--box-caption,
+.form--vanilla:not(.form--media-switch-lightbox) .form-item--box-caption-custom,
+.form--vanilla:not(.form--media-switch-on) .form-item--media-switch,
+.form--vanilla:not(.form--override-on) .form-wrapper--overridables,
+.form--vanilla.form--vanilla-on .form-item--media-switch,
+.form--vanilla:not(.form--grid-on) .form-item--grid-medium,
+.form--vanilla:not(.form--grid-on) .form-item--grid-small {
+  display: none !important;
+} */
+
+/** Fixed for things beyond Blazy. */
+.form--slick.form--media-switch-lightbox .form-item--box-style,
+.form--slick.form--media-switch-lightbox .form-item--box-media-style,
+.form--slick.form--media-switch-on .form-item--media-switch,
+.form--slick.form--media-switch-lightbox .form-item--box-caption,
+.form--slick.form--media-switch-splidebox .form-item--ajax-link,
+.form--vanilla.form--vanilla-off .form-item--media-switch {
+  display: block !important; /* csslint allow: known-properties, important */
+}
+
+/* Views UI. */
+.ui-dialog-content .form--slick .form-item {
+  margin: 0;
+}
+
+@media screen and (min-width: 760px) {
+  .form--slick.form--blazy .vertical-tabs__menu {
+    width: 190px;
+  }
+
+  .form--slick.form--blazy .vertical-tabs__items {
+    margin-left: 180px;
+  }
+
+  .form--slick.form--blazy .vertical-tabs__panes {
+    margin-left: 188px;
+  }
+
+  .form--slick .form-item label,
+  .form--optionset .vertical-tabs__panes .form-item label {
+    max-width: 49%;
+    overflow: hidden;
+    position: relative;
+    width: 49%;
+  }
+
+  .form--slick .form__header .form-item label {
+    max-width: none;
+    width: auto;
+  }
+
+  .form--slick .form-item input,
+  .form--slick .form-item select {
+    max-width: 40%;
+  }
+
+  [data-gin-accent] .form--slick .vertical-tabs .claro-details__content--vertical-tabs-item {
+    margin: 1.5rem auto;
+  }
+
+  [data-gin-accent] .form--slick.slick-form .vertical-tabs .claro-details .details-wrapper {
+    top: -42px;
+  }
+
+  [data-gin-accent] .form--slick.slick-form .vertical-tabs .claro-details .details-wrapper .details-wrapper {
+    top: 0;
+  }
+
+  [data-gin-accent] .form--slick .vertical-tabs .details--responsive .form-item input,
+  [data-gin-accent] .form--slick .vertical-tabs .details--responsive .form-item select {
+    max-width: 80px;
+    min-width: 80px;
+  }
+
+  [data-gin-accent] .form--slick .vertical-tabs__menu-link {
+    padding-left: 10px;
+    padding-right: 40px;
+  }
+
+  .form--slick .td__range {
+    max-width: 120px;
+  }
+
+  .form--slick .td__range input {
+    max-width: 100%;
+  }
+
+  .form--half.form--slick div[class*="grid"] {
+    width: 49.9999%;
+  }
+
+  .form--half.form--slick .form-item--grid.form-item {
+    border-top: 1px solid #dadada;
+    clear: both;
+    float: none;
+    width: 100%;
+  }
+
+  .form--half.form--slick .form-item--grid.form-item label {
+    max-width: 32%;
+  }
+
+  .form--half.form--slick .form-item--grid.form-item input {
+    max-width: 60%;
+  }
+
+  .ui-dialog-content .form--vanilla .form__header {
+    font-size: 17px;
+    min-height: 82px;
+  }
+
+  .views-ui-dialog .form--vanilla div[class*="-vanilla"] {
+    position: absolute !important; /* csslint allow: known-properties, important */
+    top: 0;
+  }
+
+  /* csslint ignore:start */
+  .views-ui-dialog .form--vanilla div[class*="-vanilla"] label {
+    margin-left: 15px;
+    width: auto;
+  }
+
+  #field-display-overview .field-plugin-settings-edit-form .form--slick .form-item--style,
+  #field-display-overview .field-plugin-settings-edit-form .form--slick div[class*="-vanilla"] {  /* csslint allow: ids */
+    height: 42px;
+    margin-top: -42px;
+    min-height: 42px;
+    min-width: 48.999%;
+    padding: 0;
+    top: 0;
+    width: 48.999%;
+  }
+  /* csslint ignore:end */
+
+}

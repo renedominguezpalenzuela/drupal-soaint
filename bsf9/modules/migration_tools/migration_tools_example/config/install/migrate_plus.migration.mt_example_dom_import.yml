@@ -1,0 +1,95 @@
+# This migration demonstrates importing multiple nodes from a single URL using DOM data parser plugin.
+id: mt_example_dom_import
+label: Migration Tools Drupal Dom Import Example
+migration_group: migration_tools_example
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: dom
+
+  # List of URLs to process
+  urls:
+    - 'https://www.eff.org/about'
+  # Use the url as the unique map ID.
+  ids:
+    url:
+      type: string
+  # Which field to use as the row data
+  item_selector: url
+  dom_config:
+    # Migration Tools Settings, use for "chunking" the dom into new nodes.
+    migration_tools:
+      -
+        # No "source" / "source_type" is required since it will come from the DOM of the url
+        source_operations:
+          -
+            operation: modifier
+            modifier: basicCleanup
+        # Fields define jobs to retrieve the data from the DOM and what field they will set in row.
+        fields:
+          url:
+            # Find all anchor links and use them as "rows" for the migration.
+            obtainer: ObtainLinkFile
+            jobs:
+              -
+                job: addSearch
+                method: findFileLinksHref
+                arguments:
+                  - 'body'
+                  - []
+                  - [ 'supporters.eff.org' ]
+        dom_operations:
+          -
+            operation: modifier
+            modifier: convertBaseHrefLinks
+          -
+            operation: get_field
+            field: url
+        redirect:
+          # Creates Drupal redirects from source URL to new node ID (default false).
+          - create: true
+          # Will create redirects w/query string params if true (default false).
+          - preserve_query_params: false
+          # Creates namespaced path for redirects, to avoid collitions when
+          # federating multiple sites. Each site should have its own namespace.
+          # ie. Request https://olddomain.com/a/page.html redirects to  https://newdomain.com/redirect-oldsite/a/page.html
+          # Then Drupal redirects that to https://newdomain.com/the/drupal/node.
+          - source_namespace: 'redirect-oldsite'
+  migration_tools:
+    -
+      source: url
+      source_type: url
+      source_operations:
+        -
+          operation: modifier
+          modifier: basicCleanup
+      fields:
+        body:
+          # Get the body tag
+          obtainer: ObtainBody
+          jobs:
+            -
+              job: addSearch
+              method: findTopBodyHtml
+      dom_operations:
+        -
+          operation: get_field
+          field: body
+process:
+  title: url
+  type:
+    plugin: default_value
+    default_value: page
+  body/value: body
+  body/format:
+    plugin: default_value
+    default_value: rich_text
+
+destination:
+  plugin: 'entity:node'
+
+migration_dependencies: {}
+dependencies:
+  enforced:
+    module:
+      - migration_tools_example

@@ -1,0 +1,14 @@
+{
+  "name": "drupal/migration_tools",
+  "type": "drupal-module",
+  "description": "Tools to help process difficult migrations.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/migration_tools",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/migration_tools",
+    "source": "http://cgit.drupalcode.org/migration_tools"
+  },
+  "require": { }
+}

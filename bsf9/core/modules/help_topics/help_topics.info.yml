@@ -1,0 +1,13 @@
+name: Help Topics
+type: module
+description: 'Displays help topics provided by themes and modules.'
+package: Core (Experimental)
+lifecycle: experimental
+# version: VERSION
+dependencies:
+  - drupal:help
+
+# Information added by Drupal.org packaging script on 2022-10-06
+version: '9.4.8'
+project: 'drupal'
+datestamp: 1665072456

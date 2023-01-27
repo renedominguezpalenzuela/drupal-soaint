@@ -1,0 +1,95 @@
+/**
+ * @file
+ * Blur effect.
+ *
+ * While blurring animation impresses smoother transition, it is likely slow.
+ * You can override this file, and change animation to just transition instead.
+ *
+ * @todo use SVG and Image Effect module with Imagick for better blur.
+ */
+
+/* Without transform, this is more of formality hooking into animation event.*/
+@-webkit-keyframes blazyBlur {
+  from {
+    opacity: .3;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes blazyBlur {
+  from {
+    opacity: .3;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/**
+ * Js dynamic classes during animation to match animate.css convention.
+ */
+.animated.blur img:not(.b-blur),
+.b-bg.animated.blur {
+  /* transition: opacity 500ms ease-in-out; */
+  transition: none;
+  /* The blurred image is not this actual image. */
+  -webkit-animation: blazyBlur 1s;
+  animation: blazyBlur 1s;
+}
+
+/**
+ * The blur image, to support various usages: native, BG and regular IMG.
+ * The native lazy load swaps placeholders for real images, makes it impossible
+ * to have blur effect, that is why we put it into another IMG.
+ * Blur filter is an expensive effect, use it wisely, selectively by hook alter.
+ */
+.media--fx.is-b-visible:not(.is-b-animated) .b-blur {
+  color: transparent;
+  /* < 980: The less the more artifacts. The more the slower. */
+  filter: blur(3px);
+  opacity: .9;
+  /* Longer than animation timing to let the actual image surface better. */
+  transition: opacity 1.2s;
+  /* Avoid overlaying, this causes unwanted dark shadow and more artifacts. */
+  /* z-index: 1; */
+}
+
+.media--fx-lg.is-b-visible:not(.is-b-animated) .b-blur {
+  /* > 980: The less the more artifacts. The more the slower. */
+  filter: blur(6px);
+  /* Reduces artifacts due to being large. */
+  opacity: .8;
+}
+
+/* To minimize mutations we do not remove it from DOM, instead hide it.
+Ugly, but nobody except devs pressing F12 at browsers. */
+.media.is-b-animated .b-blur,
+/* Blur animation needs extra works for IEs, not supported, disabled. */
+.media.is-b-loaded .b-blur.is-b-ie {
+  /* display: none; */
+  /* To minimize abrupt hiding, safe since it is absolute by default. */
+  opacity: 0;
+  z-index: -1;
+}
+
+/* Supports reduced motion. */
+@media (print), (prefers-reduced-motion: reduce) {
+  .animated.blur img:not(.b-blur),
+  .b-bg.animated.blur {
+    -webkit-animation-duration: 1ms !important; /* csslint allow: known-properties, important */
+    animation-duration: 1ms !important; /* csslint allow: known-properties, important */
+    -webkit-transition-duration: 1ms !important; /* csslint allow: known-properties, important */
+    transition-duration: 1ms !important; /* csslint allow: known-properties, important */
+    -webkit-animation-iteration-count: 1 !important; /* csslint allow: known-properties, important */
+    animation-iteration-count: 1 !important; /* csslint allow: known-properties, important */
+  }
+
+  .media--fx-lg.is-b-loaded .b-blur {
+    filter: blur(1px);
+    opacity: .9;
+  }
+}

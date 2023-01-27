@@ -1,0 +1,90 @@
+# Migration meta.
+id: media_pdf_sample_csv
+label: 'Media PDFs- Sample CSV'
+migration_group: Examples
+migration_tags:
+  - Content
+  - Media
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - migration_tools_example
+migration_dependencies:
+  required:
+    - terms_sample
+  optional: {  }
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+destination:
+  plugin: 'entity:media'
+  # The media content type
+  default_bundle: document
+source:
+  plugin: csv
+  path: modules/custom/example_migration/data/media-pdfs.csv
+  delimiter: ','
+  enclosure: '"'
+  header_row_count: 1
+  keys:
+    - source_url
+  column_names:
+    -
+      title: title
+    -
+      source_url: url
+    -
+      filename: filename
+  migration_tools:
+    -
+      # Handles setting redirects
+      redirect:
+        # Creates Drupal redirects from source URL to new node ID (default false).
+        create: true
+        # Optional: Allows  the override of language on redirects.  If not
+        # provided, the default langage for the site will be used.
+        language: en
+        # Specify the entity type that the redirect is being built for.
+        destination_entity: media
+        # Setting this will create the redirect to the file in  the file
+        # field_document.  Change this to match your filed field.
+        #  Leaving this out builds the redirect to the media entity/
+        destination_file_field: field_document
+        # Will create redirects w/query params in destination if true
+        # (default false). Query params are always used in the source.
+        preserve_query_params: false
+        # Creates namespaced path for redirects, to avoid collisions when
+        # federating multiple sites. Each site should have its own namespace.
+        # ie. Request https://olddomain.com/a/page.html redirects to
+        # https://newdomain.com/redirect-oldsite/a/page.html
+        # Then Drupal redirects that to https://newdomain.com/the/drupal/node.
+        source_namespace: redirect-legacy
+        # Optional  Used only when migrating a section of one site into a
+        # another site.
+        source_legacy_directory: ''
+        # The domain where this content will live after migration.
+        # This is not prepended, just used to determine links that are internal.
+        base_url: https://www.newdomain.com
+        # Domains that should be treated as though they will be migrated.
+        allowed_domains:
+         - www.olddomain.com
+          - olddomain.com
+process:
+  name:
+    plugin: str_replace
+    regex: true
+    source: title
+    search: '{\x96}'
+    replace: '–'
+
+  destination: filename
+
+  field_document:
+    plugin: file_import
+    source: source_url
+    destination: '@destination'
+
+
+

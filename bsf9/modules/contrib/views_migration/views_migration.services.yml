@@ -1,0 +1,68 @@
+services:
+  views_migration.plugin_event_subscriber:
+    class: Drupal\views_migration\Plugin\PluginEventSubscriber
+    tags:
+      - { name: event_subscriber }
+  plugin.manager.migrate.views.access:
+    class: Drupal\views_migration\Plugin\MigrateViewsPluginPluginManager
+    arguments: [access, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.area:
+    class: Drupal\views_migration\Plugin\MigrateViewsHandlerPluginManager
+    arguments: [area, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.argument:
+    class: Drupal\views_migration\Plugin\MigrateViewsHandlerPluginManager
+    arguments: [argument, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.argument_default:
+    class: Drupal\views_migration\Plugin\MigrateViewsHandlerPluginManager
+    arguments: [argument_default, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.argument_validator:
+    class: Drupal\views_migration\Plugin\MigrateViewsHandlerPluginManager
+    arguments: [argument_validator, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.base_table:
+    class: Drupal\views_migration\Plugin\MigrateViewsBaseTablePluginManager
+    arguments: [ base_table, '@container.namespaces', '@cache.discovery', '@module_handler' ]
+  plugin.manager.migrate.views.cache:
+    class: Drupal\views_migration\Plugin\MigrateViewsPluginPluginManager
+    arguments: [cache, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.display:
+    class: Drupal\views_migration\Plugin\MigrateViewsPluginPluginManager
+    arguments: [display, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.exposed_form:
+    class: Drupal\views_migration\Plugin\MigrateViewsPluginPluginManager
+    arguments: [exposed_form, '@container.namespaces', '@cache.discovery', '@module_handler' ]
+  plugin.manager.migrate.views.field:
+    class: Drupal\views_migration\Plugin\MigrateViewsHandlerPluginManager
+    arguments: [field, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.field_formatter:
+    class: Drupal\views_migration\Plugin\MigrateViewsHandlerPluginManager
+    arguments: [field_formatter, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.handler_table:
+    class: Drupal\views_migration\Plugin\MigrateViewsHandlerPluginManager
+    arguments: ['handler_table', '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.filter:
+    class: Drupal\views_migration\Plugin\MigrateViewsHandlerPluginManager
+    arguments: [filter, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.pager:
+    class: Drupal\views_migration\Plugin\MigrateViewsPluginPluginManager
+    arguments: [pager, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.relationship:
+    class: Drupal\views_migration\Plugin\MigrateViewsHandlerPluginManager
+    arguments: [relationship, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.query:
+    class: Drupal\views_migration\Plugin\MigrateViewsPluginPluginManager
+    arguments: [query, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.row:
+    class: Drupal\views_migration\Plugin\MigrateViewsPluginPluginManager
+    arguments: [row, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.sort:
+    class: Drupal\views_migration\Plugin\MigrateViewsHandlerPluginManager
+    arguments: [sort, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.style:
+    class: Drupal\views_migration\Plugin\MigrateViewsPluginPluginManager
+    arguments: [style, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.style_summary:
+    class: Drupal\views_migration\Plugin\MigrateViewsHandlerPluginManager
+    arguments: [style_summary, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.migrate.views.text_format:
+    class: Drupal\views_migration\Plugin\MigrateViewsHandlerPluginManager
+    arguments: ['text_format', '@container.namespaces', '@cache.discovery', '@module_handler']

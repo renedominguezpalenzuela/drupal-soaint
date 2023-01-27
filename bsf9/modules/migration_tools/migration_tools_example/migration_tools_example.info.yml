@@ -1,0 +1,12 @@
+type: module
+name: Migration Tools Example
+description: 'Examples of how to use Migration Tools.'
+package: Examples
+core_version_requirement: ^8 || ^9
+dependencies:
+  - drupal:migration_tools
+
+# Information added by Drupal.org packaging script on 2022-11-16
+version: '8.x-2.5'
+project: 'migration_tools'
+datestamp: 1668575552

@@ -1,0 +1,10 @@
+name: 'Internal Page Cache'
+type: module
+description: 'Caches pages for anonymous users and can be used when external page cache is not available.'
+package: Core
+# version: VERSION
+
+# Information added by Drupal.org packaging script on 2022-10-06
+version: '9.4.8'
+project: 'drupal'
+datestamp: 1665072456

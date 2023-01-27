@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains migration_tools.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function migration_tools_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the migration_tools module.
+    case 'help.page.migration_tools':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Tools to help process difficult migrations.') . '</p>';
+      return $output;
+
+    default:
+  }
+}

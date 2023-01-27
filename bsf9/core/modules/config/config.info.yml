@@ -1,0 +1,11 @@
+name: 'Configuration Manager'
+type: module
+description: 'Allows administrators to import and export configuration changes.'
+package: Core
+# version: VERSION
+configure: config.sync
+
+# Information added by Drupal.org packaging script on 2022-10-06
+version: '9.4.8'
+project: 'drupal'
+datestamp: 1665072456

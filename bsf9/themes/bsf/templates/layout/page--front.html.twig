@@ -1,0 +1,41 @@
+{% include '@bsf/layout/header.html.twig' %} 
+
+{%
+  set container_class = 'container-fluid'
+%}
+
+   <div class="{{'slider-container ' ~ container_class }}">
+    {% if page.top_slider %}
+      {{ page.top_slider }}
+    {% endif %}
+   </div>
+
+
+   <div class="{{'main-container ' ~ container_class }}">
+
+
+      <div class="row">
+         
+          <section class="col-sm-12">
+                {% if page.highlighted %}
+                  <div class="highlighted jumbotron">{{ page.highlighted }}</div>
+                {% endif %}
+                <div class="visually-hidden"><a id="main-content" tabindex="-1"></a></div>
+                               
+                {% if page.content_home %}
+                  {{ page.content_home }}
+                {% endif %}
+
+
+          </section>
+    
+      </div>    
+  </div>
+
+ {% if page.top_footer %}
+    <div class="{{'top-footer-container ' ~ container_class }}">    
+          {{ page.top_footer }}
+    </div>
+  {% endif %}
+
+{% include '@bsf/layout/footer.html.twig' %} 

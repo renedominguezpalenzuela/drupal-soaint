@@ -1,0 +1,34 @@
+type: theme
+base theme: bootstrap
+core_version_requirement: ^9 || ^10
+logo: logo.png
+
+name: 'BSF Bootstrap Sub-Theme (CDN)'
+description: 'Uses the jsDelivr CDN for all CSS and JavaScript. No source files or compiling is necessary and is recommended for simple sites or beginners.'
+package: 'Alsea'
+
+
+libraries:
+  - bsf/global-styling
+
+
+regions:
+  navigation: 'Navigation'
+  header: 'Top Bar'
+  top_slider: 'Top Slider'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  content: 'Content'
+  content_home: 'Content home'
+  sidebar_first: 'Primary'
+  sidebar_second: 'Secondary'
+  top_footer: 'Top Footer'
+  footer: 'Footer'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+
+
+# Information added by Drupal.org packaging script on 2022-06-10
+version: '9.4.8'
+project: 'alsea'
+datestamp: 1654873487

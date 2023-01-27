@@ -1,0 +1,74 @@
+services:
+  blazy.base:
+    abstract: true
+    class: Drupal\blazy\BlazyBase
+    arguments: ['%app.root%', '@entity.repository', '@entity_type.manager', '@module_handler', '@renderer', '@config.factory', '@cache.default', '@language_manager']
+
+  # @todo extends blazy.base at 3.x, or before.
+  # Still intact to minimize mis-matched version issues for non-composer users.
+  blazy.manager.base:
+    abstract: true
+    class: Drupal\blazy\BlazyManagerBase
+    # @todo enable at 3.x, or before:
+    # parent: blazy.base
+    # @todo remove the following at 3.x, or before:
+    arguments: ['%app.root%', '@entity.repository', '@entity_type.manager', '@module_handler', '@renderer', '@config.factory', '@cache.default']
+    calls:
+      # @todo remove and use DI instead after sub-module updates, and put as the
+      # last argument only if to support careless users ignoring hook_update().
+      - [setLanguageManager, ['@language_manager']]
+
+  blazy.manager:
+    abstract: false
+    class: Drupal\blazy\BlazyManager
+    parent: blazy.manager.base
+
+  blazy.formatter:
+    class: Drupal\blazy\BlazyFormatter
+    parent: blazy.manager
+
+  blazy.oembed:
+    class: Drupal\blazy\Media\BlazyOEmbed
+    arguments: ['@request_stack', '@media.oembed.resource_fetcher', '@media.oembed.url_resolver', '@media.oembed.iframe_url_helper', '@image.factory', '@blazy.manager']
+
+  blazy.entity:
+    class: Drupal\blazy\BlazyEntity
+    arguments: ['@blazy.oembed']
+
+  blazy.admin.base:
+    abstract: true
+    class: Drupal\blazy\Form\BlazyAdminBase
+    arguments: ['@entity_display.repository', '@config.typed', '@date.formatter', '@blazy.manager']
+
+  blazy.admin.formatter:
+    class: Drupal\blazy\Form\BlazyAdminFormatter
+    parent: blazy.admin.base
+
+  blazy.admin.extended:
+    class: Drupal\blazy\Dejavu\BlazyAdminExtended
+    parent: blazy.admin.base
+
+  blazy.admin:
+    class: Drupal\blazy\Form\BlazyAdmin
+    parent: blazy.admin.base
+
+  blazy.csp_subscriber:
+    class: Drupal\blazy\EventSubscriber\CspSubscriber
+    arguments:
+      - '@library.dependency_resolver'
+    tags:
+      - { name: event_subscriber }
+
+  # @todo deprecate this if you can't make it non-static at blazy: 4.x.
+  blazy.media:
+    class: Drupal\blazy\Media\BlazyMedia
+    # @todo arguments: ['@blazy.entity', '@blazy.oembed']
+
+  # @todo deprecated and is removed for blazy.formatter at blazy: 3.x.
+  blazy.formatter.manager:
+    class: Drupal\blazy\BlazyFormatterManager
+    parent: blazy.formatter
+
+  # @todo deprecated and is removed from blazy: 8.2.1+.
+  blazy:
+    class: Drupal\blazy\Blazy

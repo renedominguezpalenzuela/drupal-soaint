@@ -1,0 +1,10 @@
+name: 'Migrate property overwrite test'
+type: module
+description: 'Example module demonstrating property overwrite support in the Migrate API.'
+package: Testing
+# version: VERSION
+
+# Information added by Drupal.org packaging script on 2022-10-06
+version: '9.4.8'
+project: 'drupal'
+datestamp: 1665072456

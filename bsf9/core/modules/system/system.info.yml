@@ -1,0 +1,12 @@
+name: System
+type: module
+description: 'Handles general site configuration for administrators.'
+package: Core
+# version: VERSION
+required: true
+configure: system.admin_config_system
+
+# Information added by Drupal.org packaging script on 2022-10-06
+version: '9.4.8'
+project: 'drupal'
+datestamp: 1665072456

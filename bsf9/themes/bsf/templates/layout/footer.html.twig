@@ -1,0 +1,10 @@
+{%
+  set container_class = 'container-fluid'
+%}
+ {% if page.footer %}
+    <footer class="{{'footer ' ~ container_class }}">
+      {{ page.footer }}
+    </footer>
+  {% endif %}
+ 
+

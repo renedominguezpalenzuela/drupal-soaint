@@ -1,0 +1,504 @@
+# Migration meta.
+id: node_sample_csv
+label: 'Node - Sample CSV'
+migration_group: Examples
+migration_tags:
+  - Content
+  - Node
+cck_plugin_method: null
+class: null
+dependencies:
+  enforced:
+    module:
+      - migration_tools_example
+destination:
+  plugin: 'entity:node'
+  default_bundle: article
+field_plugin_method: null
+langcode: en
+migration_dependencies:
+  required:
+    - media_image
+    - terms_sample
+  optional: {  }
+status: true
+
+# Definitions of where the data is coming from and what should happen BEFORE
+# the data is passed to process plugins.
+source:
+  plugin: csv
+  path: modules/custom/example_migration/data/article-export.csv
+  delimiter: ','
+  enclosure: '"'
+  header_row_count: 1
+  keys:
+    - source_url
+  # These are the lables of the column names to the source.
+  # pattern:  source_name: column heading.
+  column_names:
+    -
+      title: Title
+    -
+      csvfield_date_published: field_date_published
+    -
+      field_award: field_award
+    -
+      field_publication: field_publication
+    -
+      csvbody: body
+    -
+      changed: changed
+    -
+      created: created
+    # This one has magic to it as this is used for href rewriting on the page.
+    -
+      source_url: 'Source URL'
+    -
+      field_manual_tags: NewTaxonomy
+
+  # Migration Tools Settings for processing the content as it is grabbed from
+  # the csvbody.  In this case the csvbody column has all the html markup.
+  migration_tools:
+    # An array of sources to process
+    -
+      source: csvbody  # This is the field to pull from in the csv
+      source_type: html
+      # Source operations happen before the html is passed to QueryPath.
+      source_operations:
+        -
+          operation: modifier
+          modifier: basicCleanup
+        -
+          operation: modifier
+          modifier: replaceString
+          arguments:
+            - '&#58;'
+            - ':'
+        -
+          operation: modifier
+          modifier: replaceString
+          arguments:
+            - '\"'
+            - '"'
+        -
+          operation: modifier
+          modifier: replaceString
+          arguments:
+            - '<h1>Notes</h1>'
+            - ''
+      # Fields define fields to set in migrate row, and what jobs they should
+      # use to try to retrieve the body from the source.)
+      # Fields are in alpha sort for readability.
+      fields:
+        body:
+          obtainer: ObtainHtml
+          jobs:
+            -
+              job: addSearch
+              method: findSelector
+              arguments:
+                - 'body'
+                - 1
+                - html
+        # This one has a column in the csv but is sometimes empty and the value
+        # is sitting in the body. So lets grab it.
+        mtfield_date_published:
+          obtainer: ObtainDate
+          jobs:
+            -
+              job: addSearch
+              method: pluckSelector
+              arguments:
+                  - .articleDate
+                  - 0
+            -
+              job: addSearch
+              method: pluckAnySelectorUntilValid
+              arguments:
+                  - p
+                  - 3
+        field_footnotes:
+          obtainer: ObtainHtml
+          jobs:
+            -
+              job: addSearch
+              method: pluckSelector
+              arguments:
+                - '#workscited'
+                - 1
+                - innerHtml
+            -
+              job: addSearch
+              method: pluckSelector
+              arguments:
+                - '#worksCited'
+                - 1
+                - innerHtml
+            -
+              job: addSearch
+              method: pluckSelector
+              arguments:
+                - '.worksCited'
+                - 1
+                - innerHtml
+        field_subtitle:
+          # This is how you reference a custom Obtainer.
+          obtainer: Drupal\custom_migration\Obtainer\ObtainSubTitleLengthLimited
+          jobs:
+            -
+              job: addSearch
+              method: pluckSelectorNextSiblingTarget
+              arguments:
+                - h1
+                - 0
+                - p em
+                - 0
+      # Dom operations is the playlist of retrievals (get_field) which run the
+      # field jobs, and alterations (modifier). These run in order from top
+      # to bottom.
+      dom_operations:
+        -
+          operation: modifier
+          modifier: convertLinksAbsoluteSimple
+          arguments:
+            - NULL
+            - https://www.newdomain.com
+        -
+          operation: modifier
+          modifier: convertImageLinksToMedia
+          arguments:
+            # Lookup is either migrate_map or redirect.
+            - migrate_map
+            # Source(s) the migration to lookup. Not needed for redirect lookup.
+            - [media_image]
+        -
+          operation: modifier
+          modifier: convertBinaryFileLinksToMedia
+          arguments:
+            # Lookup is either migrate_map or redirect.
+            - redirect
+        -
+          operation: modifier
+          modifier: fixNamedAnchors
+        -
+          operation: get_field
+          field: field_subtitle
+        -
+          operation: get_field
+          field: mtfield_date_published
+        -
+          operation: modifier
+          modifier: removeSelectorN
+          arguments:
+            - "#workscited > h4"
+            - 1
+        -
+          operation: modifier
+          modifier: removeSelectorN
+          arguments:
+            - ".worksCited > h4"
+            - 1
+        -
+          operation: get_field
+          field: field_footnotes
+        -
+          operation: modifier
+          modifier: rewrapElements
+          arguments:
+            -
+              .capleft: <aside class="call-out align-left" />
+              .capright: <aside class="call-out align-right" />
+              .pullquote: <blockquote />
+              .rightbox: <aside class="call-out align-right" />
+        -
+          operation: modifier
+          modifier: removeSelectorN
+          arguments:
+            - h1
+            - 1
+        -
+          operation: modifier
+          modifier: removeInsensitiveMatchAndNextSibling
+          arguments:
+            - h2
+            - "cite this article"
+            - html
+        -
+          operation: modifier
+          modifier: removeInsensitiveMatchAndNextSibling
+          arguments:
+            - p
+            - "cite this article"
+            - html
+        -
+          operation: get_field
+          field: body
+      # Handles url rewriting on links and imaged.
+      pathing:
+        # List domains that should be processed when paths are re-written.
+        domain_conversion:
+          # Pattern-  domain to process: corresponding replacement.
+          # Order matters, go from most strict to most broad.
+          www.olddomain.com: www.newdomain.com/redirect-legacy
+          olddomain.com: www.newdomain.com/redirect-legacy
+      # Handles setting redirects
+      redirect:
+        # Creates Drupal redirects from source URL to new node ID (default false).
+        create: true
+        # Optional: Allows  the override of language on redirects.  If not
+        # provided, the default langage for the site will be used.
+        language: en
+        # Specify the entity type that the redirect is being built for.
+        destination_entity: node
+        # Will create redirects w/query params in destination if true
+        # (default false). Query params are always used in the source.
+        preserve_query_params: false
+        # Creates namespaced path for redirects, to avoid collisions when
+        # federating multiple sites. Each site should have its own namespace.
+        # ie. Request https://olddomain.com/a/page.html redirects to
+        # https://newdomain.com/redirect-oldsite/a/page.html
+        # Then Drupal redirects that to https://newdomain.com/the/drupal/node.
+        source_namespace: redirect-legacy
+        # Optional  Used only when migrating a section of one site into a
+        # another site.
+        source_legacy_directory: ''
+        # The domain where this content will live after migration.
+        # This is not prepended, just used to determine links that are internal.
+        base_url: https://www.newdomain.com
+        # An array of filenames that can be treated as an index that would
+        # be returned as the index for the path.
+        # example:  /path/index.htm gets returned at /path/  as well.
+        index_filenames:
+          [Page/welcome, index, default]
+        scan_for:
+          # Requires CURL access.
+          server_side_redirects: false
+          # Read from page content.
+          header_redirects: false
+          js_redirects: false
+          # Text that indicated the page has moved, but does not redirect.
+          fake_redirects: false
+        #Array of phrases used to indicate the page moved.
+        fake_redirect_phrases: [ ]
+        # Domains that should be treated as though they will be migrated.
+        allowed_domains:
+          - www.olddomain.com
+          - olddomain.com
+# Process runs after all the field data has been gathered, assigns the data to
+# the fields and perform extra manipulation as needed.  Process plugins run in
+# order from top to bottom.   Fields are in alpha sort for readability.
+process:
+  # Address all the node fields.
+  title:
+    -
+      plugin: callback
+      callable: trim
+      source: title
+    -
+      plugin: str_replace
+      search: '\"'
+      replace: '"'
+
+  field_date_published:
+    # Since this value can either come from the body or the csv fields we use
+    # them all.  First one to have a value wins.
+    -
+      plugin: get
+      source:
+        - mtfield_date_published
+        - csvfield_date_published
+        - created
+        - changed
+    -
+    # Filter out empty sources.
+      plugin: callback
+      callable: array_filter
+    -
+      # Use the first non empty source.
+      plugin: callback
+      callable: 'current'
+    -
+      plugin: callback
+      callable: strtotime
+    -
+      # This is a required field so put in a date if it doesn't have one.
+      plugin: default_value
+      # Chose a recognizeably incorrect date of 2019-01-01.
+      default_value: 1546344000
+    -
+      plugin: format_date
+      from_format: U
+      to_format: Y-m-d
+      from_timezone: UTC
+      to_timezone: America/New_York
+  field_award:
+    -
+      plugin: skip_on_empty
+      source: field_award
+      method: process
+    -
+      plugin: lookup_publication_award
+  field_publication:
+    -
+      plugin: skip_on_empty
+      source: field_publication
+      method: process
+    -
+      plugin: explode
+      delimiter: ;
+    -
+      plugin: callback
+      callable: trim
+    -
+      plugin: entity_lookup
+      entity_type: node
+      bundle: publication
+      bundle_key: type
+      value_key: field_ncj_number
+      ignore_case: true
+  field_footnotes/value: field_footnotes
+  field_footnotes/format:
+    plugin: default_value
+    default_value: rich_text
+  field_subtitle: field_subtitle
+  body/value: body
+  body/format:
+    plugin: default_value
+    default_value: rich_text
+  url: source_url
+  field_manual_tags:
+    -
+      plugin: explode
+      source: field_manual_tags
+      delimiter: ;
+    -
+      plugin: callback
+      callable: trim
+    -
+      plugin: entity_lookup
+      entity_type: taxonomy_term
+      property: name
+      ignore_case: true
+  # Address all the node properties.
+  changed:
+    # Since this value can either come from the csv or the body fields we use
+    # them all.  First one to have a value wins.
+    -
+      plugin: get
+      source:
+        - changed
+        - mtfield_date_published
+        - csvfield_date_published
+        - created
+    -
+    # Filter out empty sources.
+      plugin: callback
+      callable: array_filter
+    -
+      # Use the first non empty source.
+      plugin: callback
+      callable: 'current'
+    -
+      plugin: callback
+      callable: strtotime
+    -
+      plugin: skip_on_value
+      method: process
+      value:
+        - false
+        - null
+        - 0
+    -
+      plugin: format_date
+      from_format: U
+      to_format: U
+      from_timezone: America/New_York
+      to_timezone: UTC
+  created:
+    -
+      plugin: get
+      source:
+        - created
+        - mtfield_date_published
+        - csvfield_date_published
+        - changed
+    -
+     # Filter out empty sources.
+      plugin: callback
+      callable: array_filter
+    -
+      # Use the first non empty source.
+      plugin: callback
+      callable: 'current'
+    -
+      plugin: callback
+      callable: strtotime
+    -
+      plugin: skip_on_value
+      method: process
+      value:
+        - false
+        - null
+        - 0
+    -
+      plugin: format_date
+      from_format: U
+      to_format: U
+      from_timezone: America/New_York
+      to_timezone: UTC
+  langcode:
+    plugin: default_value
+    default_value: en
+  moderation_state:
+    plugin: default_value
+    default_value: published
+  path/alias:
+    plugin: default_value
+    default_value:
+  path/pathauto:
+    plugin: default_value
+    default_value: 1
+  promote:
+    plugin: default_value
+    default_value: 0
+  revision_timestamp:
+    -
+      plugin: get
+      source:
+        - changed
+        - mtfield_date_published
+        - csvfield_date_published
+        - created
+    -
+     # Filter out empty sources.
+      plugin: callback
+      callable: array_filter
+    -
+      # Use the first non empty source.
+      plugin: callback
+      callable: 'current'
+    -
+      plugin: callback
+      callable: strtotime
+    -
+      plugin: skip_on_value
+      method: process
+      value:
+        - false
+        - null
+        - 0
+    -
+      plugin: format_date
+      from_format: U
+      to_format: U
+      from_timezone: America/New_York
+      to_timezone: UTC
+  type:
+    plugin: default_value
+    default_value: article
+  sticky:
+    plugin: default_value
+    default_value: 0
+  uid:
+    plugin: default_value
+    default_value: 1
