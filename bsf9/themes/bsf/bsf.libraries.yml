@@ -3,6 +3,7 @@ global-styling:
   css:
     theme:
       css/style.css: {}
+      css/custom.css: {}
       css/font-awesome.min.css: {}
       css/animate.css: {}
   js:
