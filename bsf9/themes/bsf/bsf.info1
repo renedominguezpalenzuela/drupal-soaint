@@ -30,7 +30,7 @@ stylesheets[all][] = css/style.css
 stylesheets[all][] = css/font-awesome.min.css
 stylesheets[all][] = css/animate.css
 
-; ;;;;;;;;;;;;;;;;;;;;;
+; ;;;;;;;;;;;;;;;;;;;;
 ; ;; Scripts
 ; ;;;;;;;;;;;;;;;;;;;;;
 
