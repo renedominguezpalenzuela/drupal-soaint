@@ -15,6 +15,26 @@
 }
 
 
+.carousel-title {
+    font-family: 'Oswald', sans-serif!important;
+    font-size: 30px;
+    color: #5d5F5F;
+    line-height: 33px;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    /* line-height: 1.1; */
+}
+
+
+.carousel-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    color: #5d5F5F;
+    line-height: 28px;
+}
+
+
 /* Boton de login provoca un scroll bar horizontal */
 .navbar-right {
     margin-right: -0px !important;
@@ -45,4 +65,11 @@
 .down-arrow  {
     position: absolute;
     bottom: 2vh;
+}
+
+/* agrega un margen en el area superior, que no esta presente en https://www.britishsandwichfactory.com/ */
+.body {
+ 
+        margin-top: 0px!important;
+ 
 }
