@@ -1,4 +1,48 @@
-.car-image {
-    background-color: blue;
-    height: 75vh;
+.carousel-image {
+    height: 81vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+
+
+.carousel-content {
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+
+/* Boton de login provoca un scroll bar horizontal */
+.navbar-right {
+    margin-right: -0px !important;
+}
+
+/* Temporal, hasta eliminar desde drupal el boton de login */
+.menu--account {
+    display: none !important;
+}
+
+/* Provoca un margen indeseado en la imagen */
+.slide__caption {
+    padding: 0px;
+}
+
+/* Puntos del Carrusel: Posicion */
+.slick-dots {
+    /* bottom: 68px!important; */
+    bottom: 10.88vh!important; 
+    
+}
+
+/* Puntos del Carrusel: Tamano */
+.slick-dots li button::before {
+    font-size: 1.4rem;
+}
+
+.down-arrow  {
+    position: absolute;
+    bottom: 2vh;
 }

@@ -36,10 +36,10 @@
 
 {# /*drupal_dump(fields) */ #}
 
-<div class="row car-image" style="background-image: url({{fields.field_slider_main_img.content}})">
-<div class="col-xs-12 col-sm-6 slider-content-wrapper">
-    <div class="slider-content">
-        <div class="inner-box">
+<div class="row carousel-image" style="background-image: url({{fields.field_slider_main_img.content}})">
+<div class="col-xs-12 col-sm-6 slider-content-wrapper carousel-container">
+    <div class="slider-content carousel-content">
+        <div class="inner-box ">
             <h2>{{fields.title.content}}</h2>
             {{fields.body.content}}        
 
@@ -48,5 +48,10 @@
                href="{{base_url['#markup'] ~ fields.field_link.content }}" class="btn btn-bsf1">Ver más</a>
         </div>
     </div>
+</div>
+
+
+<div class="down-arrow floating-arrow hidden-xs">
+   <i class="fa fa-angle-down"></i>
 </div>
 </div>
