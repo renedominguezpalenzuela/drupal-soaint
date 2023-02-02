@@ -16,7 +16,7 @@
 
 
 .carousel-title {
-    font-family: 'Oswald', sans-serif!important;
+    font-family: 'Oswald', sans-serif !important;
     font-size: 30px;
     color: #5d5F5F;
     line-height: 33px;
@@ -53,8 +53,8 @@
 /* Puntos del Carrusel: Posicion */
 .slick-dots {
     /* bottom: 68px!important; */
-    bottom: 10.88vh!important; 
-    
+    bottom: 10.88vh !important;
+
 }
 
 /* Puntos del Carrusel: Tamano */
@@ -62,14 +62,12 @@
     font-size: 1.4rem;
 }
 
-.down-arrow  {
+.down-arrow {
     position: absolute;
     bottom: 2vh;
 }
 
 /* agrega un margen en el area superior, que no esta presente en https://www.britishsandwichfactory.com/ */
-.body {
- 
-        margin-top: 0px!important;
- 
+body {
+    margin-top: 0px !important;
 }
