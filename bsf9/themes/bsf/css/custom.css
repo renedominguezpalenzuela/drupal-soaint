@@ -75,10 +75,7 @@
     bottom: 2vh;
 }
 
-/* agrega un margen en el area superior, que no esta presente en https://www.britishsandwichfactory.com/ */
-body {
-    margin-top: 0px !important;
-}
+
 
 
 
@@ -105,3 +102,15 @@ body {
         text-align: center;
     }
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+/*    Analizar                                                                                          */
+/* ---------------------------------------------------------------------------------------------------- */
+/* agrega un margen en el area superior, que no esta presente en https://www.britishsandwichfactory.com/ */
+body {
+    margin-top: 0px !important;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+/*  FIN:   Analizar                                                                                          */
+/* ---------------------------------------------------------------------------------------------------- */
