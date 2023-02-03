@@ -81,14 +81,14 @@ body {
 }
 
 
+
 /* responsive */
-@media (max-width:767px){
+
+@media (max-width: 640px) {
 	.carousel-image {
-        height: 65vh;
-        align-items: start;
+        height:79vh;
         padding-top: 17.8rem;
-        background-size: contain;
-        
+        background-size: contain;       
 	}
     .slick-dots {        
         bottom: -2.2vh ;    
