@@ -34,24 +34,21 @@
 
 {%  set base_url = url('<front>')  %}
 
-{# /*drupal_dump(fields) */ #}
+{# {{drupal_dump(fields) }} #}
 
-	<div class="carousel2-contenedor"> 
-	<a href="{{base_url['#markup'] ~ fields.field_link.content }}">
-		{# <img class="img-responsive lazyOwl carousel2-image" src="{{fields.field_slider_main_img.content}}" alt="" >   #}
-		<img class="lazyOwl carousel2-image" src="{{base_url['#markup'] ~ 'sites/default/files/catalog/pretzel-de-roastbeef.jpg'}}" alt="">
+<div class="carousel2-contenedor">
+	{# <a href="{{base_url['#markup'] ~ fields.field_link.content }}"> #}
+	  <a href="{{ fields.view_node.content }}"> 
+		{# <img class="img-responsive lazyOwl carousel2-image" src="{{fields.field_product_image.content}}" alt="" >   #}
+		<img class="lazyOwl carousel2-image" src="{{fields.field_product_image.content}}" alt="">
 
 		<div class="product-content carousel2-product ">
-			<div class="carousel2-product-title">Ciabattina grigliata de pollo BBQ Titulo</div>
+			<div class="carousel2-product-title">{{fields.title.content}}</div>
 			<hr class="carousel2-line">
 			<div class="product-description carousel2-product-desc ">
-				<p>Ciabattina marcada rellena de jugoso pollo asado, suave queso Cheddar naranja y bacon
-					                            horneado,
-					                            acompañado de salsa BBQ Chipotle.</p>
+				{{fields.body.content}}
 			</div>
 		</div>
 
 	</a>
 </div>
-
-
