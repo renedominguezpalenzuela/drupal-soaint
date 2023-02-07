@@ -1,6 +1,6 @@
 .carousel-image {
     height: 84vh;
-    
+
     /* Alineacion Vertical de contenido  */
     display: flex;
     flex-direction: row;
@@ -8,19 +8,13 @@
     align-items: center;
 
     /* background-position: center center; */
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
 
     /* La imagen de fondo se reescala automáticamente con el cambio del ancho de ventana del navegador */
     background-size: cover;
 
 }
 
-
-/* Puntos del Carrusel: Posicion */
-.slick-dots {
-    bottom: 10.88vh ;
-
-}
 
 
 
@@ -70,6 +64,15 @@
     font-size: 1.4rem;
 }
 
+
+/* TODO: Puntos del Carrusel de la pagina principal, hacer mas especifico pues afecta al resto: Posicion */
+/* Mas Especifico: si la clase .slick-dots esta dentro de la clase .block-views-blockbloque1-block-1 entonces esta en Home*/
+.block-views-blockbloque1-block-1 .slick-dots {
+    bottom: 10.88vh;
+
+}
+
+
 .down-arrow {
     position: absolute;
     bottom: 2vh;
@@ -82,18 +85,22 @@
 /* responsive */
 
 @media (max-width: 640px) {
-	.carousel-image {
-        height:79vh;
+    .carousel-image {
+        height: 79vh;
         padding-top: 17.8rem;
-        background-size: contain;       
-	}
-    .slick-dots {        
-        bottom: -2.2vh ;    
+        background-size: contain;
     }
 
-    .carousel-title {  
+    /* TODO: Puntos del Carrusel de la pagina principal, hacer mas especifico pues afecta al resto: Posicion */
+    /* Mas Especifico: si la clase .slick-dots esta dentro de la clase .block-views-blockbloque1-block-1 entonces esta en Home*/
+    .block-views-blockbloque1-block-1 .slick-dots {
+        bottom: -2.2vh;
+    }
+
+    .carousel-title {
         font-size: 20px;
-    }    
+    }
+
     .carousel-text {
         font-size: 16px;
     }
@@ -102,6 +109,149 @@
         text-align: center;
     }
 }
+
+/*--------------------------------------------------------------------------------------------------------
+  Carrusel 2
+---------------------------------------------------------------------------------------------------------*/
+
+.carousel2-image {
+    /* height: 84vh; */
+    width: 20vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+
+
+    /* Alineacion Vertical de contenido  */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+
+    /* background-position: center center; */
+    background-repeat: no-repeat;
+
+    /* La imagen de fondo se reescala automáticamente con el cambio del ancho de ventana del navegador */
+    background-size: cover;
+
+}
+
+
+.carusel2-inner-box {
+
+    /* background: rgba(255, 255, 255, 0.55);
+        padding: 20px 20px 30px 20px;
+        border: 4px solid #840de6;
+        max-width: 500px; */
+
+
+    height: 255px;
+    border: solid 3px #E6DDC1;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+
+}
+
+
+
+.carousel2-contenedor {
+    width: 300px;
+    height: 300px;
+
+    border: solid 3px #E6DDC1;
+    text-align: center;
+    position: relative;
+}
+
+
+.carousel2-product {
+    margin: 0;
+    position: absolute;
+    top: 5px;
+   
+}
+
+
+.carousel2-product-title {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-size: 1.8rem !important;
+    font-weight: 400;
+    color: #5c6061;
+    text-decoration: none;
+    padding: 13px 50px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.carousel2-image {
+    padding-top: 35px;
+    opacity: 1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+
+
+.carousel2-product-desc {
+    opacity: 0;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    font-size: 1.2rem !important;
+    text-transform: none;
+    font-weight: 200;
+    color: #5c6061;
+    text-decoration: none;
+    padding: 1px 10px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+
+}
+
+
+
+
+
+/*La clase carousel2-product-title esta en algun lugar dentro de la clase carousel2-contenedor */ 
+.carousel2-contenedor:hover .carousel2-product-title{
+    margin-top: 30px;
+
+}
+
+.carousel2-contenedor:hover .carousel2-image{
+    opacity: 0;
+}
+
+.carousel2-contenedor:hover .carousel2-line{
+    opacity: 1;
+}
+
+.carousel2-contenedor:hover .carousel2-product-desc {
+    opacity: 1;
+}
+
+
+
+.carousel2-line {
+    opacity: 0;
+    margin: 15px 25%;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+   
+}
+
+
+
+
 
 /* ---------------------------------------------------------------------------------------------------- */
 /*    Analizar                                                                                          */

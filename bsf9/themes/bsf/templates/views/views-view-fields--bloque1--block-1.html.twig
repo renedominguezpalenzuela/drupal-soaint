@@ -36,22 +36,22 @@
 
 {# /*drupal_dump(fields) */ #}
 
-<div class="row carousel-image" style="background-image: url({{fields.field_slider_main_img.content}})">
-<div class="col-xs-12 col-sm-6 slider-content-wrapper carousel-container">
-    <div class="slider-content carousel-content">
-        <div class="inner-box ">
-            <div class="carousel-title">{{fields.title.content}}</div>
-            <div class="carousel-text"> {{fields.body.content}}  </div>      
+<div class="row carousel-image lazyOwl " style="background-image: url({{fields.field_slider_main_img.content}})">
+	<div class="col-xs-12 col-sm-6 slider-content-wrapper carousel-container">
+		<div class="slider-content carousel-content">
+			<div class="inner-box ">
+				<div class="carousel-title">{{fields.title.content}}</div>
+				<div class="carousel-text">
+					{{fields.body.content}}
+				</div>
 
-            <a data-event-category="Home" data-event-action="Inbound"
-               data-event-label="TRAFFIC_SliderHome_[{{fields.title.content}}]_ES"
-               href="{{base_url['#markup'] ~ fields.field_link.content }}" class="btn btn-bsf1">Ver más</a>
-        </div>
-    </div>
-</div>
+				<a data-event-category="Home" data-event-action="Inbound" data-event-label="TRAFFIC_SliderHome_[{{fields.title.content}}]_ES" href="{{base_url['#markup'] ~ fields.field_link.content }}" class="btn btn-bsf1">Ver más</a>
+			</div>
+		</div>
+	</div>
 
 
-<div class="down-arrow floating-arrow hidden-xs">
-   <i class="fa fa-angle-down"></i>
-</div>
+	<div class="down-arrow floating-arrow hidden-xs">
+		<i class="fa fa-angle-down"></i>
+	</div>
 </div>

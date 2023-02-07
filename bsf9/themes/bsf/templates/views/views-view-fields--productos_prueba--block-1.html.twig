@@ -36,22 +36,22 @@
 
 {# /*drupal_dump(fields) */ #}
 
-<div class="row carousel-image" style="background-image: url({{fields.field_slider_main_img.content}})">
-<div class="col-xs-12 col-sm-6 slider-content-wrapper carousel-container">
-    <div class="slider-content carousel-content">
-        <div class="inner-box ">
-            <div class="carousel-title">{{fields.title.content}}</div>
-            <div class="carousel-text"> {{fields.body.content}}  </div>      
+	<div class="carousel2-contenedor"> 
+	<a href="{{base_url['#markup'] ~ fields.field_link.content }}">
+		{# <img class="img-responsive lazyOwl carousel2-image" src="{{fields.field_slider_main_img.content}}" alt="" >   #}
+		<img class="lazyOwl carousel2-image" src="{{base_url['#markup'] ~ 'sites/default/files/catalog/pretzel-de-roastbeef.jpg'}}" alt="">
 
-            <a data-event-category="Home" data-event-action="Inbound"
-               data-event-label="TRAFFIC_SliderHome_[{{fields.title.content}}]_ES"
-               href="{{base_url['#markup'] ~ fields.field_link.content }}" class="btn btn-bsf1">Ver más</a>
-        </div>
-    </div>
+		<div class="product-content carousel2-product ">
+			<div class="carousel2-product-title">Ciabattina grigliata de pollo BBQ Titulo</div>
+			<hr class="carousel2-line">
+			<div class="product-description carousel2-product-desc ">
+				<p>Ciabattina marcada rellena de jugoso pollo asado, suave queso Cheddar naranja y bacon
+					                            horneado,
+					                            acompañado de salsa BBQ Chipotle.</p>
+			</div>
+		</div>
+
+	</a>
 </div>
 
 
-<div class="down-arrow floating-arrow hidden-xs">
-   <i class="fa fa-angle-down"></i>
-</div>
-</div>
