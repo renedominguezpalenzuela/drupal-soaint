@@ -1,0 +1,33 @@
+{# mobile_detect/templates/mobile-detect-status-block.html.twig #}
+{% block mobile_detect %}
+
+  {% set color = internal_cache ? 'red' : 'green' %}
+  {% set status = internal_cache ? 'enabled' : 'disabled' %}
+
+  <p>If you want to use the mobile_detect cache contexts to vary the content 
+  served to anonymous users, "Internal Page Cache" must be disabled, 
+  and the performance impact that entails incurred.</p>
+
+  <p style="color: {{ color }}">Internal Page Cache module is {{ status }}</p>
+
+  <ul>
+    {% if is_mobile() %}
+    <li><strong>Is Mobile</strong></li>
+    {% endif %}
+    {% if is_tablet() %}
+    <li><strong>Is Tablet</strong></li>
+    {% endif %}
+    {% if not is_mobile() %}
+    <li><strong>Is Desktop</strong></li>
+    {% endif %}
+    {% if not is_mobile() %}
+    <li>Is Not Mobile</li>
+    {% endif %}
+    {% if not is_tablet() %}
+    <li>Is Not Tablet</li>
+    {% endif %}
+    {% if is_mobile() %}
+    <li>Is Not Desktop</li>
+    {% endif %}
+  </ul>
+{% endblock %}

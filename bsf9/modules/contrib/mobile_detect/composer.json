@@ -1,0 +1,29 @@
+{
+  "name": "drupal/mobile_detect",
+  "description": "Mobile_Detect is a lightweight PHP class for detecting mobile devices.",
+  "type": "drupal-module",
+  "homepage": "http://drupal.org/project/mobile_detect",
+  "authors": [
+    {
+      "name": "Matthew Donadio (mpdonadio)",
+      "homepage": "https://www.drupal.org/u/mpdonadio",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Darryl Norris (darol100)",
+      "email": "admin@darrylnorris.com",
+      "homepage": "https://www.drupal.org/u/darol100",
+      "role": "Co-maintainer"
+    }
+  ],
+  "support": {
+    "issues": "http://drupal.org/project/mobile_detect",
+    "irc": "irc://irc.freenode.org/drupal-contribute",
+    "source": "http://cgit.drupalcode.org/mobile_detect"
+  },
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "require": {
+    "mobiledetect/mobiledetectlib": "2.8.37"
+  }
+}

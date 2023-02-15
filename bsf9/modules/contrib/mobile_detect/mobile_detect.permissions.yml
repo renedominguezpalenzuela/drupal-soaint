@@ -1,0 +1,3 @@
+administer mobile_detect configuration:
+  title: 'Administer mobile_detect configuration'
+  description: 'Allows users to view the Mobile Detect configuration.'

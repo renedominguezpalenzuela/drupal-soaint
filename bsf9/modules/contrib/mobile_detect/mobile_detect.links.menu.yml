@@ -1,0 +1,6 @@
+mobile_detect.settings:
+  title: 'Mobile detect'
+  description: 'Administer the Mobile Detect settings'
+  parent: system.admin_config_ui
+  route_name: mobile_detect.settings
+  weight: 10

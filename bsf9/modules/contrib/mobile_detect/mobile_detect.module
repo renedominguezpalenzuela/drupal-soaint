@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * @file
+ * Contains mobile_detect.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Xss;
+
+// Ludwig module integration.
+if (\Drupal::hasService('ludwig.require_once')) {
+  $ludwig_require_once = \Drupal::service('ludwig.require_once');
+  $ludwig_require_once->requireOnce('mobiledetect/mobiledetectlib', 'Mobile_Detect.php', dirname(__FILE__));
+}
+
+/**
+ * Implements hook_help().
+ */
+function mobile_detect_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the mobile_detect module.
+    case 'help.page.mobile_detect':
+      return _mobile_detect_get_readme();
+  }
+}
+
+/**
+ * Helper for mobile_detect readme.
+ */
+function _mobile_detect_get_readme() {
+  $readme = file_get_contents(dirname(__FILE__) . '/README.txt');
+  // Get the module handler service.
+  $module_handler = \Drupal::moduleHandler();
+  if ($module_handler->moduleExists('markdown')) {
+    $filters = $module_handler->invoke('markdown', 'filter_info');
+    $info = $filters['filter_markdown'];
+
+    if (function_exists($info['process callback'])) {
+      $function = $info['process callback'];
+      $output = Xss::filterAdmin($function($readme, NULL));
+    }
+    else {
+      $output = '<pre>' . Html::escape($readme) . '</pre>';
+    }
+  }
+  else {
+    $output = '<pre>' . Html::escape($readme) . '</pre>';
+  }
+
+  return $output;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function mobile_detect_theme() {
+  return [
+    'mobile_detect_status_block' => [
+      'variables' => ['internal_cache' => NULL],
+    ]
+  ];
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function mobile_detect_page_attachments_alter(array &$attachments) {
+  if (\Drupal::config('mobile_detect.settings')->get('mobile_detect_is_mobile')) {
+    $attachments['#cache']['contexts'][] = 'mobile_detect_is_mobile';
+  }
+}
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function mobile_detect_preprocess_html(&$variables) {
+  // Add cache context so both versions are saved.
+  $variables['#cache']['contexts'][] = 'mobile_detect_is_mobile';
+
+  // Add classes if device is mobile or tablet.
+  $detect = \Drupal::service('mobile_detect');
+  if ($detect->isMobile()) {
+    $variables['attributes']['class'][] = 'is-mobile';
+  }
+
+  if ($detect->isTablet()) {
+    $variables['attributes']['class'][] = 'is-tablet';
+  }
+}
+
+/**
+ * Implements hook_preprocess_paragraph().
+ */
+function mobile_detect_preprocess_paragraph(&$variables) {
+  $variables['#cache']['contexts'][] = 'mobile_detect_is_mobile';
+}

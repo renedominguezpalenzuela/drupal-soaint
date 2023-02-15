@@ -1,0 +1,8 @@
+{
+  "require": {
+    "mobiledetect/mobiledetectlib": {
+      "version": "v2.8.37",
+      "url": "https://github.com/serbanghita/Mobile-Detect/archive/2.8.37.zip"
+    }
+  }
+}
